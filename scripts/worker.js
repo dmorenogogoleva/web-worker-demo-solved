@@ -1,5 +1,5 @@
 // importScripts('imageManips.js');
-import { manipulate } from './imageManips'
+import { getManipFunc } from './imageManips'
 
 
 onmessage = function (e) {
@@ -8,15 +8,15 @@ onmessage = function (e) {
 
   try {
     let length = imageData.data.length / 4;
+    var manipulatePixel = getManipFunc(type);
     let j, i, ref, r, g, b, a
-
 
     for (i = j = 0, ref = length; 0 <= ref ? j <= ref : j >= ref; i = 0 <= ref ? ++j : --j) {
       r = imageData.data[i * 4 + 0];
       g = imageData.data[i * 4 + 1];
       b = imageData.data[i * 4 + 2];
       a = imageData.data[i * 4 + 3];
-      let pixel = manipulate(type, r, g, b, a);
+      let pixel = manipulatePixel(r, g, b, a);
       imageData.data[i * 4 + 0] = pixel[0];
       imageData.data[i * 4 + 1] = pixel[1];
       imageData.data[i * 4 + 2] = pixel[2];
